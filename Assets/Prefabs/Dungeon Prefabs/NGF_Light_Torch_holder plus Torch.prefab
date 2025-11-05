@@ -113,7 +113,7 @@ GameObject:
   - component: {fileID: 565561658842254093}
   - component: {fileID: 1159908853245905177}
   m_Layer: 0
-  m_Name: NGF_Light_Torch_holder
+  m_Name: NGF_Light_Torch_holder plus Torch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
