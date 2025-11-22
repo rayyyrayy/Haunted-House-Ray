@@ -16,6 +16,11 @@ public class DoorAnim : MonoBehaviour
         {
             Debug.Log("No Key or Lock");
         }
+
+        if (_lock!= null)
+        {
+            isLocked=true;
+        }
     }
     
     public void ToggleDoor()
