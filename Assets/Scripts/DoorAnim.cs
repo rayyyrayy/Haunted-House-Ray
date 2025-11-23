@@ -16,11 +16,6 @@ public class DoorAnim : MonoBehaviour
         {
             Debug.Log("No Key or Lock");
         }
-
-        if (_lock!= null)
-        {
-            isLocked=true;
-        }
     }
     
     public void ToggleDoor()
@@ -50,5 +45,15 @@ public class DoorAnim : MonoBehaviour
         isLocked = false;
         Destroy(key);
         Destroy(_lock);
+    }
+
+    public void LockkDoor()
+    {
+        if (!isClosed)
+        {
+            doorAnim.Play("Door_Close");
+        }
+        isLocked = true;
+        _lock.SetActive(true);
     }
 }
