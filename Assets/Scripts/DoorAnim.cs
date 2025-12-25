@@ -47,6 +47,14 @@ public class DoorAnim : MonoBehaviour
         Destroy(_lock);
     }
 
+    public void OpenDoor()
+    {
+        if (isClosed)
+        {
+            doorAnim.Play("Door_Open");
+        }
+    }
+
     public void LockkDoor()
     {
         if (!isClosed)
