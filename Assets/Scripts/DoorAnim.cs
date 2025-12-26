@@ -8,11 +8,12 @@ public class DoorAnim : MonoBehaviour
     private Animator doorAnim;
     public GameObject key;
     public GameObject _lock;
+    public GameObject _startGameLock;
 
     void Awake()
     {
         doorAnim = GetComponent<Animator>();
-        if (key == null || _lock == null)
+        if (key == null || _lock == null || _startGameLock==null)
         {
             Debug.Log("No Key or Lock");
         }
@@ -45,6 +46,7 @@ public class DoorAnim : MonoBehaviour
         isLocked = false;
         Destroy(key);
         Destroy(_lock);
+        _startGameLock.gameObject.SetActive(false);
     }
 
     public void OpenDoor()
@@ -53,6 +55,7 @@ public class DoorAnim : MonoBehaviour
         {
             doorAnim.Play("Door_Open");
         }
+        isClosed=false;
     }
 
     public void LockkDoor()
@@ -60,8 +63,21 @@ public class DoorAnim : MonoBehaviour
         if (!isClosed)
         {
             doorAnim.Play("Door_Close");
+            isClosed=true;
         }
         isLocked = true;
         _lock.SetActive(true);
+    }
+
+    public void StartGame()
+    {
+        if (!isClosed)
+        {
+            doorAnim.Play("Door_Close");
+            isClosed=true;
+        }
+        isLocked=true;
+       _startGameLock.gameObject.SetActive(true);
+        
     }
 }

@@ -8,6 +8,7 @@ TagManager:
   - Trail
   - Side Door
   - Torch
+  - Start Game
   layers:
   - Default
   - TransparentFX
@@ -15,6 +16,7 @@ TagManager:
   - 
   - Water
   - UI
+  - Player
   - 
   - 
   - 
@@ -39,8 +41,7 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Treasure
   m_SortingLayers:
   - name: Default
     uniqueID: 0

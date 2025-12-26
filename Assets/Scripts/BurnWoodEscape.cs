@@ -1,3 +1,6 @@
+using System.Collections;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
 
 public class BurnWoodEscape : MonoBehaviour
@@ -7,8 +10,16 @@ public class BurnWoodEscape : MonoBehaviour
     {
         if (other.CompareTag("Torch"))
         {
-            burningAnimation.Play();
-            Destroy(gameObject);
+            StartCoroutine(burnWood());
         }
+    }
+
+
+    IEnumerator burnWood()
+    {
+        burningAnimation.gameObject.SetActive(true);
+        burningAnimation.Play();
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
     }
 }
