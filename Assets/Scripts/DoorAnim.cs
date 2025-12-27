@@ -9,11 +9,13 @@ public class DoorAnim : MonoBehaviour
     public GameObject key;
     public GameObject _lock;
     public GameObject _startGameLock;
+    public AudioSource doorSound;
+
 
     void Awake()
     {
         doorAnim = GetComponent<Animator>();
-        if (key == null || _lock == null || _startGameLock==null)
+        if (key == null || _lock == null || _startGameLock==null || doorSound==null )
         {
             Debug.Log("No Key or Lock");
         }
@@ -26,11 +28,13 @@ public class DoorAnim : MonoBehaviour
             if (isClosed && !isLocked)
             {
                 doorAnim.Play("Door_Open");
+                doorSound.Play();
                 isClosed = false;
             }
             else if (!isClosed)
             {
                 doorAnim.Play("Door_Close");
+                doorSound.Play();
                 isClosed = true;
             }
             else
@@ -54,6 +58,7 @@ public class DoorAnim : MonoBehaviour
         if (isClosed)
         {
             doorAnim.Play("Door_Open");
+            doorSound.Play();
         }
         isClosed=false;
     }
@@ -63,6 +68,7 @@ public class DoorAnim : MonoBehaviour
         if (!isClosed)
         {
             doorAnim.Play("Door_Close");
+            doorSound.Play();
             isClosed=true;
         }
         isLocked = true;
@@ -74,6 +80,7 @@ public class DoorAnim : MonoBehaviour
         if (!isClosed)
         {
             doorAnim.Play("Door_Close");
+            doorSound.Play();
             isClosed=true;
         }
         isLocked=true;

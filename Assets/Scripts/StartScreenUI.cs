@@ -8,6 +8,7 @@ public class StartScreenUI : MonoBehaviour
     public Button nextButton;
     public Button prevButton;
     public Button startButton;
+    public AudioSource buttonClick;
     private int index=0;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -27,6 +28,7 @@ public class StartScreenUI : MonoBehaviour
 
     public void PrevButton()
     {
+        buttonClick.Play();
         screens[index].SetActive(false);
         index--;
         screens[index].SetActive(true);
@@ -42,6 +44,7 @@ public class StartScreenUI : MonoBehaviour
 
 public void NextButton()
     {
+        buttonClick.Play();
         screens[index].SetActive(false);
         index++;
         screens[index].SetActive(true);
@@ -54,4 +57,5 @@ public void NextButton()
             startButton.gameObject.SetActive(true);
         }
     }
+
 }
