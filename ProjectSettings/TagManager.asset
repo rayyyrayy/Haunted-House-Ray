@@ -9,6 +9,10 @@ TagManager:
   - Side Door
   - Torch
   - Start Game
+  - Interactable
+  - Concrete
+  - Wood
+  - Tile
   layers:
   - Default
   - TransparentFX
@@ -17,6 +21,7 @@ TagManager:
   - Water
   - UI
   - Player
+  - Floor
   - 
   - 
   - 
@@ -41,7 +46,6 @@ TagManager:
   - 
   - 
   - 
-  - Treasure
   m_SortingLayers:
   - name: Default
     uniqueID: 0
