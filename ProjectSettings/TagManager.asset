@@ -13,6 +13,9 @@ TagManager:
   - Concrete
   - Wood
   - Tile
+  - Gem
+  - End Game
+  - Return Background
   layers:
   - Default
   - TransparentFX
