@@ -24,7 +24,7 @@ public class GhostScript : MonoBehaviour
     void Update()
     {
         transform.Translate(direction* speed * Time.deltaTime);
-        if (transform.position.y>10 || transform.position.x <-6 || transform.position.x >40|| transform.position.z >50 || transform.position.z <0    )
+        if (transform.position.y>10 || transform.position.x <-10 || transform.position.x >40|| transform.position.z >55 || transform.position.z <0    )
         {
             Destroy(gameObject);
         }

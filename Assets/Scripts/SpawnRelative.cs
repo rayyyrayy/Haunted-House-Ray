@@ -131,5 +131,11 @@ public class SpawnRelative : MonoBehaviour
         }
     }
 
+    public void endStorm()
+    {
+        if (ghostStorm)
+        ghostStorm=false;
+    }
+
 
 }

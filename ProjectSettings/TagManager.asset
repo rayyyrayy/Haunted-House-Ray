@@ -16,6 +16,7 @@ TagManager:
   - Gem
   - End Game
   - Return Background
+  - Knight
   layers:
   - Default
   - TransparentFX
