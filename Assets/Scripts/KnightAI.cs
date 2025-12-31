@@ -14,6 +14,7 @@ public class KnightAI : MonoBehaviour
     private NavMeshAgent agent;
     private Animator anim;
     public bool targetTriggered = false;
+    public bool isAttacking=false;
     private bool isDead = false;
 
     void Start() {
@@ -27,7 +28,15 @@ public class KnightAI : MonoBehaviour
     {
     if (isDead) return;
 
-    if (targetTriggered) {
+    if (targetTriggered) 
+    {
+
+        Vector3 lookDir = player.position - transform.position;
+        lookDir.y = 0; // Keep him from tilting up/down
+        if (lookDir != Vector3.zero) 
+        {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 5f);
+        }
         float distance = Vector3.Distance(transform.position, player.position);
 
         if (distance > attackRange) {
@@ -38,8 +47,11 @@ public class KnightAI : MonoBehaviour
             agent.isStopped = true; // Stop to attack
             anim.SetBool("isWalking", false);
             if (Time.time >= nextAttackTime) {
+                EnemyWeapon enemyWeapon=GetComponent<EnemyWeapon>();
+                
                 anim.SetTrigger("attack"); 
                 nextAttackTime = Time.time + attackRate;
+                StartCoroutine(AttackWindow());
             }
         }
     } else {
@@ -57,6 +69,7 @@ public class KnightAI : MonoBehaviour
     if (health <= 0) {
         // CALL DEATH FIRST
         Die(); 
+        
     } else {
         // ONLY CALL HIT IF STILL ALIVE
         anim.SetTrigger("gethit"); 
@@ -84,6 +97,12 @@ public class KnightAI : MonoBehaviour
 
     // 4. Turn off collider so player can walk through the body
     GetComponent<Collider>().enabled = false; 
+}
+
+IEnumerator AttackWindow() {
+    isAttacking = true;
+    yield return new WaitForSeconds(1.0f); // Keep the mace "deadly" for 1 second
+    isAttacking = false;
 }
 public void TriggrTarget()
     {

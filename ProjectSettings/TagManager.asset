@@ -17,6 +17,7 @@ TagManager:
   - End Game
   - Return Background
   - Knight
+  - Enemy Weapon
   layers:
   - Default
   - TransparentFX

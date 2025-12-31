@@ -123,7 +123,7 @@ public class SpawnRelative : MonoBehaviour
 
     public void toggleStorm() // Made public so other scripts can see it
     {
-        ghostStorm = !ghostStorm; // Shorthand to flip true/false
+        ghostStorm = true; // Shorthand to flip true/false
         
         if (ghostStorm) 
         {
