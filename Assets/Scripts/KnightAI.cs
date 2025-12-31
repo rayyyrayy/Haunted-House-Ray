@@ -45,7 +45,7 @@ public class KnightAI : MonoBehaviour
     } else {
         // IMPORTANT: If not triggered, ensure the agent and animations are totally still
         agent.isStopped = true; 
-        anim.SetBool("isWalking", false);
+        anim.SetBool("idle", true);
     }
 }
 
