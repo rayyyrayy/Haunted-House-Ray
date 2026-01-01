@@ -4,9 +4,9 @@ using UnityEngine.AI;
 
 public class KnightAI : MonoBehaviour
 {
-    public Transform player;
+    private Transform player; // Changed to private since we find it automatically
     public float attackRange = 2; 
-    public float attackRate = .8f; // How many seconds between swings
+    public float attackRate = .8f; 
     private float nextAttackTime = 0f;
     
     public int health = 3;
@@ -14,98 +14,95 @@ public class KnightAI : MonoBehaviour
     private NavMeshAgent agent;
     private Animator anim;
     public bool targetTriggered = false;
-    public bool isAttacking=false;
+    public bool isAttacking = false;
     private bool isDead = false;
 
     void Start() {
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+
+        // AUTOMATICALLY FIND THE PLAYER
+        GameObject playerObj = GameObject.Find("XR Rig");
+        if (playerObj != null) {
+            player = playerObj.transform;
+        } else {
+            Debug.LogError("KnightAI: Could not find 'XR Rig' in the scene!");
+        }
+
         agent.isStopped = true;
+        // Setting destination to current position to prevent early sliding
         agent.SetDestination(transform.position);
     }
 
     void Update() 
     {
-    if (isDead) return;
+        if (isDead || player == null) return;
 
-    if (targetTriggered) 
-    {
-
-        Vector3 lookDir = player.position - transform.position;
-        lookDir.y = 0; // Keep him from tilting up/down
-        if (lookDir != Vector3.zero) 
+        if (targetTriggered) 
         {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 5f);
-        }
-        float distance = Vector3.Distance(transform.position, player.position);
 
-        if (distance > attackRange) {
-            agent.isStopped = false; // Move
-            agent.SetDestination(player.position);
-            anim.SetBool("isWalking", true); 
-        } else {
-            agent.isStopped = true; // Stop to attack
-            anim.SetBool("isWalking", false);
-            if (Time.time >= nextAttackTime) {
-                EnemyWeapon enemyWeapon=GetComponent<EnemyWeapon>();
+            float distance = Vector3.Distance(transform.position, player.position);
+
+            if (distance > attackRange) {
+                agent.isStopped = false; 
+                agent.SetDestination(player.position);
+                anim.SetBool("isWalking", true); 
+            } else {
+                // STOP SLIDING: Set velocity to zero immediately
+                agent.isStopped = true; 
+                agent.velocity = Vector3.zero; 
                 
-                anim.SetTrigger("attack"); 
-                nextAttackTime = Time.time + attackRate;
-                StartCoroutine(AttackWindow());
+                anim.SetBool("isWalking", false);
+
+                // Rotate to face player while attacking
+                Vector3 lookDir = player.position - transform.position;
+                lookDir.y = 0;
+                if (lookDir != Vector3.zero) {
+                    transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(lookDir), Time.deltaTime * 5f);
+                }
+
+                if (Time.time >= nextAttackTime) {
+                    anim.SetTrigger("attack"); 
+                    nextAttackTime = Time.time + attackRate;
+                    StartCoroutine(AttackWindow());
+                }
             }
         }
-    } else {
-        // IMPORTANT: If not triggered, ensure the agent and animations are totally still
-        agent.isStopped = true; 
-        anim.SetBool("idle", true);
     }
-}
+
 
     public void TakeDamage() {
-    if (isDead) return;
-
-    health--;
-
-    if (health <= 0) {
-        // CALL DEATH FIRST
-        Die(); 
-        
-    } else {
-        // ONLY CALL HIT IF STILL ALIVE
-        anim.SetTrigger("gethit"); 
-    }
-}
-    void Die() 
-{
-    isDead = true;
-    
-    // 1. Stop the Agent and disable it so he can't move/slide
-    agent.isStopped = true;
-    agent.enabled = false; 
-
-    // 2. Stop any physics momentum to prevent spinning/sliding
-    Rigidbody rb = GetComponent<Rigidbody>();
-    if (rb != null)
-    {
-        rb.linearVelocity = Vector3.zero; // Use velocity if on older Unity versions
-        rb.angularVelocity = Vector3.zero;
-        rb.isKinematic = true; // Makes him ignore physics forces
+        if (isDead) return;
+        health--;
+        if (health <= 0) {
+            Die(); 
+        } else {
+            anim.SetTrigger("gethit"); 
+        }
     }
 
-    // 3. Play animation
-    anim.SetTrigger("death");
+    void Die() {
+        isDead = true;
+        agent.isStopped = true;
+        agent.enabled = false; 
 
-    // 4. Turn off collider so player can walk through the body
-    GetComponent<Collider>().enabled = false; 
-}
+        Rigidbody rb = GetComponent<Rigidbody>();
+        if (rb != null) {
+            rb.linearVelocity = Vector3.zero;
+            rb.isKinematic = true; 
+        }
 
-IEnumerator AttackWindow() {
-    isAttacking = true;
-    yield return new WaitForSeconds(1.0f); // Keep the mace "deadly" for 1 second
-    isAttacking = false;
-}
-public void TriggrTarget()
-    {
-        targetTriggered=true;
+        anim.SetTrigger("death");
+        GetComponent<Collider>().enabled = false; 
+    }
+
+    IEnumerator AttackWindow() {
+        isAttacking = true;
+        yield return new WaitForSeconds(attackRate * 0.9f); // Sync with attack rate
+        isAttacking = false;
+    }
+
+    public void TriggrTarget() {
+        targetTriggered = true;
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic; // Added for the list
 using UnityEngine;
 
 public class PlayerWeapon : MonoBehaviour
@@ -7,50 +8,49 @@ public class PlayerWeapon : MonoBehaviour
     public GameObject regularSlash;
     public GameObject finalSlash;
 
-    public bool canHit = true; // This is the "gate"
-    public float cooldownTime = 0.8f; // How fast you can swing
-    private KnightAI knight;
+    public bool isAttacking = false; // Set this to true when the player swings
+    public float cooldownTime = 0.7f; 
+    
+    // This list keeps track of who we already hit in THIS swing
+    private List<KnightAI> knightsHitInThisSwing = new List<KnightAI>();
 
     private void OnTriggerEnter(Collider other) 
     {
-        // Check if the gate is open AND we hit a Knight
-        if (canHit && other.CompareTag("Knight")) 
+        if (other.CompareTag("Knight")) 
         {
-            KnightAI knight = other.GetComponent<KnightAI>();
-            // Close the gate immediately
-            if (knight.health <= 0) return;
-            canHit = false;
-            Vector3 hitPoint = other.ClosestPoint(transform.position);
-                    
+            KnightAI hitKnight = other.GetComponent<KnightAI>();
 
-            // Deal damage
-            if (knight != null)
+            if (hitKnight != null && !knightsHitInThisSwing.Contains(hitKnight))
             {
-                knight.TakeDamage();
-                if (knight.health <= 0)
+                // If knight is already dead, ignore them
+                if (hitKnight.health <= 0) return;
+
+                // Add to list so we don't hit the SAME knight twice in one frame
+                knightsHitInThisSwing.Add(hitKnight);
+
+                Vector3 hitPoint = other.ClosestPoint(transform.position);
+                hitKnight.TakeDamage();
+
+                if (hitKnight.health <= 0)
                 {
                     Instantiate(finalSlash, hitPoint, Quaternion.identity);
-
-                } else
+                } 
+                else
                 {
                     Instantiate(regularSlash, hitPoint, Quaternion.identity);
-                    StartCoroutine(ResetAttack());
-
                 }
+
+                if (attackHit != null) attackHit.Play();
+                
+                // Start a timer to clear the "already hit" list
+                StartCoroutine(ResetHitList());
             }
-
-            // Play sound
-            if (attackHit != null) attackHit.Play();
-
-            // Start the timer to open the gate again
         }
     }
 
-    IEnumerator ResetAttack()
+    IEnumerator ResetHitList()
     {
         yield return new WaitForSeconds(cooldownTime);
-        
-        canHit = true; // Open the gate
-
+        knightsHitInThisSwing.Clear(); 
     }
 }

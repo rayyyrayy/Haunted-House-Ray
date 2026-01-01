@@ -12,16 +12,19 @@ public class TreasureChest : MonoBehaviour
 
     void Update()
     {
+        if (isOpen)
+        {
         float targetAngle = isOpen ? openAngle : 0f;
         Quaternion targetRotation = Quaternion.Euler(targetAngle, 0, 0);
 
         // We rotate the lidTransform, NOT the object the script is on
         lidTransform.localRotation = Quaternion.Slerp(lidTransform.localRotation, targetRotation, Time.deltaTime * smoothSpeed);
+        }
     }
 
     public void ToggleChest()
     {
-        isOpen = !isOpen;
+        isOpen = true;
         treasure.SetActive(true);
         
     }

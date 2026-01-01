@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.XR.Interaction.Toolkit.Interactors;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -49,6 +50,7 @@ public class PlayerManager : MonoBehaviour
         if (playerHealth <= 0)
         {
             deathCanvas.gameObject.SetActive(true);
+            StartCoroutine(PauseAndDrop());
             Time.timeScale = 0f; // Freezes AI and animations
         }
         else
@@ -63,9 +65,26 @@ public class PlayerManager : MonoBehaviour
         livesCanvas.gameObject.SetActive(true);
         
         // Use Realtime so UI works even if Time.timeScale is 0
-        yield return new WaitForSecondsRealtime(1f); 
+        yield return new WaitForSecondsRealtime(.8f); 
         
         livesCanvas.gameObject.SetActive(false);
         isInvincible = false;
     } 
+
+    IEnumerator PauseAndDrop()
+    {
+        // 1. Find all Interactors (Controllers/Hands)
+        XRBaseInteractor[] interactors = FindObjectsByType<XRBaseInteractor>(FindObjectsSortMode.None);
+
+        foreach (XRBaseInteractor interactor in interactors)
+        {
+            // 2. Force the interactor to "deselect" (drop) the object
+            if (interactor.hasSelection)
+            {
+                // This effectively "drops" the item immediately
+                interactor.interactionManager.SelectExit(interactor, interactor.firstInteractableSelected);
+            }
+        }
+        yield return new WaitForSeconds(1);
+}
 }

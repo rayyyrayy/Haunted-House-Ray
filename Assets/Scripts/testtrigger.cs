@@ -24,7 +24,7 @@ public class testtrigger : MonoBehaviour
         if (other.CompareTag("Player")&& knightAI.isAttacking)
         {
             audioSource.Play();
-            // playerManager.TakeDamage();
+            playerManager.TakeDamage();
         }
     }
 }
