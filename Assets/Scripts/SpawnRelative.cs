@@ -15,9 +15,12 @@ public class SpawnRelative : MonoBehaviour
     public SpawnLocation location;
     private bool hasGrabbedFirstItem = false;
     private bool ghostStorm=false;
+    public int ghostEncountered=0;
+    private PlayerManager playerManager;
 
     void Start()
     {
+        playerManager=GameObject.Find("XR Rig").GetComponent<PlayerManager>();
       if (gemAudio ==null)
         {
             Debug.Log("no gem audio equipped");
@@ -65,6 +68,7 @@ public class SpawnRelative : MonoBehaviour
     IEnumerator Spawn(Vector3 targetPos, Vector3 targetForward, Vector3 targetRight)
     {
         isSpawning = true;
+        playerManager.GhostEcountered();
         objectIndex=Random.Range(0,objectToSpawn.Count);
         Vector3 spawnPos = Vector3.zero;
         SpawnLocation selectedLocation = location;
@@ -116,6 +120,7 @@ public class SpawnRelative : MonoBehaviour
             
             spawnDelay= Random.Range(0.5f, 3.0f);
             StartCoroutine(Spawn(transform.position, Vector3.forward, Vector3.right));
+            ghostEncountered++;
             yield return new WaitForSeconds(spawnDelay);
         }
         

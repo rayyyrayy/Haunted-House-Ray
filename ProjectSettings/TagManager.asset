@@ -18,6 +18,7 @@ TagManager:
   - Return Background
   - Knight
   - Enemy Weapon
+  - Trigger Knight
   layers:
   - Default
   - TransparentFX

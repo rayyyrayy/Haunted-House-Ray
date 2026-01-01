@@ -16,8 +16,10 @@ public class KnightAI : MonoBehaviour
     public bool targetTriggered = false;
     public bool isAttacking = false;
     private bool isDead = false;
-
+    public int knightsDefeated;
+    private PlayerManager playerManager;
     void Start() {
+        playerManager=GameObject.Find("XR Rig").GetComponent<PlayerManager>();
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
 
@@ -83,6 +85,7 @@ public class KnightAI : MonoBehaviour
 
     void Die() {
         isDead = true;
+        playerManager.KnightDied();
         agent.isStopped = true;
         agent.enabled = false; 
 
@@ -105,4 +108,5 @@ public class KnightAI : MonoBehaviour
     public void TriggrTarget() {
         targetTriggered = true;
     }
+
 }

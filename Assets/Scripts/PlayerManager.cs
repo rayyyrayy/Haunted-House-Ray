@@ -9,10 +9,19 @@ public class PlayerManager : MonoBehaviour
     public UnityEvent startGame;
     public UnityEvent endGame;
     public UnityEvent returnBackground;
-    public int playerHealth = 3;
+    private int playerHealth=5;
+    private int  startingHealth=5;
+    private int deaths;
+    private int totalKnightsDefeated = 0;
+    private int totalGhostsEncountered = 0;
+
     public Canvas livesCanvas;
     public Canvas deathCanvas;
     public TextMeshProUGUI livesText;
+    public TextMeshProUGUI knightDefeatedText;
+    public TextMeshProUGUI ghostEcounteredText;
+    public TextMeshProUGUI deathsText;
+
 
     private bool isInvincible = false; // Prevents multi-hits in one swing
 
@@ -40,17 +49,19 @@ public class PlayerManager : MonoBehaviour
         {
             returnBackground.Invoke();
         }
+
     }
 
     public void TakeDamage()
     {
         playerHealth--;
+        deaths=startingHealth-playerHealth;
+        deathsText.SetText("Deaths: "+deaths);
         livesText.SetText("Lives: " + playerHealth);
         
         if (playerHealth <= 0)
         {
             deathCanvas.gameObject.SetActive(true);
-            StartCoroutine(PauseAndDrop());
             Time.timeScale = 0f; // Freezes AI and animations
         }
         else
@@ -71,20 +82,38 @@ public class PlayerManager : MonoBehaviour
         isInvincible = false;
     } 
 
-    IEnumerator PauseAndDrop()
-    {
-        // 1. Find all Interactors (Controllers/Hands)
-        XRBaseInteractor[] interactors = FindObjectsByType<XRBaseInteractor>(FindObjectsSortMode.None);
 
-        foreach (XRBaseInteractor interactor in interactors)
-        {
-            // 2. Force the interactor to "deselect" (drop) the object
-            if (interactor.hasSelection)
-            {
-                // This effectively "drops" the item immediately
-                interactor.interactionManager.SelectExit(interactor, interactor.firstInteractableSelected);
-            }
-        }
-        yield return new WaitForSeconds(1);
-}
+    public void easyDiffuculty()
+    {
+        playerHealth=7;
+        startingHealth=playerHealth;
+        livesText.SetText("Lives: " + playerHealth);
+
+    }
+
+    public void mediumDiffuculty()
+    {
+        playerHealth=5;
+        startingHealth=playerHealth;
+        livesText.SetText("Lives: " + playerHealth);
+    }
+
+    public void hardDiffuculty()
+    {
+        playerHealth=3;
+        startingHealth=playerHealth;
+        livesText.SetText("Lives: " + playerHealth);
+    }
+    public void KnightDied()
+    {
+        totalKnightsDefeated++; // Add this! Every time any knight dies, this goes up.
+        knightDefeatedText.SetText("Knights Defeated : " + totalKnightsDefeated);
+    }
+
+    public void GhostEcountered()
+    {
+        totalGhostsEncountered++;
+        ghostEcounteredText.SetText("Ghost Encountered: "+ totalGhostsEncountered);
+
+    }
 }
