@@ -84,19 +84,34 @@ public class KnightAI : MonoBehaviour
     }
 
     void Die() {
-        isDead = true;
+    if (isDead) return; // Safety check to prevent the function from running twice
+    isDead = true;
+
+    // 1. CLEAR PENDING TRIGGERS
+    // This stops the knight from trying to 'finish' an attack or hit flinch
+    anim.ResetTrigger("attack");
+    anim.ResetTrigger("gethit");
+
+    // 2. TRIGGER DEATH
+    anim.SetTrigger("death");
+
+    // 3. LOGIC UPDATES
+    if (playerManager != null) {
         playerManager.KnightDied();
-        agent.isStopped = true;
-        agent.enabled = false; 
+    }
 
-        Rigidbody rb = GetComponent<Rigidbody>();
-        if (rb != null) {
-            rb.linearVelocity = Vector3.zero;
-            rb.isKinematic = true; 
-        }
+    // 4. PHYSICS & NAVIGATION
+    agent.isStopped = true;
+    agent.enabled = false; 
 
-        anim.SetTrigger("death");
-        GetComponent<Collider>().enabled = false; 
+    Rigidbody rb = GetComponent<Rigidbody>();
+    if (rb != null) {
+        rb.linearVelocity = Vector3.zero;
+        rb.isKinematic = true; 
+    }
+
+    // 5. CLEANUP
+    GetComponent<Collider>().enabled = false; 
     }
 
     IEnumerator AttackWindow() {
