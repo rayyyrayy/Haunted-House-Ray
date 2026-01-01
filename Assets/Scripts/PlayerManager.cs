@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.XR.Interaction.Toolkit.Interactors;
@@ -61,6 +62,7 @@ public class PlayerManager : MonoBehaviour
         
         if (playerHealth <= 0)
         {
+
             deathCanvas.gameObject.SetActive(true);
             Time.timeScale = 0f; // Freezes AI and animations
         }
