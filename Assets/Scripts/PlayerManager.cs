@@ -23,6 +23,7 @@ public class PlayerManager : MonoBehaviour
     public TextMeshProUGUI ghostEcounteredText;
     public TextMeshProUGUI deathsText;
     [SerializeField] private OnButtonPress triggerbuttonPress;
+    public GameObject damageFlash;
 
 
     private bool isInvincible = false; // Prevents multi-hits in one swing
@@ -64,13 +65,14 @@ public class PlayerManager : MonoBehaviour
         
         if (playerHealth <= 0)
         {
-
+            StartCoroutine(DamageFlash());
             deathCanvas.gameObject.SetActive(true);
             triggerbuttonPress.enabled=true;
             Time.timeScale = 0f; // Freezes AI and animations
         }
         else
         {
+            StartCoroutine(DamageFlash());
             StartCoroutine(FlashHealth());
         }
     }
@@ -137,5 +139,12 @@ public class PlayerManager : MonoBehaviour
     public void triggerDisabled()
     {
         triggerbuttonPress.enabled=false;
+    }
+
+    IEnumerator DamageFlash()
+    {
+        damageFlash.SetActive(true);
+        yield return new WaitForSeconds(.2f);
+        damageFlash.SetActive(false);
     }
 }
