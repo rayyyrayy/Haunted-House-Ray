@@ -18,8 +18,13 @@ public class KnightAI : MonoBehaviour
     private bool isDead = false;
     public int knightsDefeated;
     private PlayerManager playerManager;
+    private KnightEndGame chaseScript;
+    private KnightEndGame escapeScript;
     void Start() {
         playerManager=GameObject.Find("XR Rig").GetComponent<PlayerManager>();
+        chaseScript=GameObject.Find("Spawn Chase Knights").GetComponent<KnightEndGame>();
+        escapeScript=GameObject.Find("Knight Escape Trigger").GetComponent<KnightEndGame>();
+
         agent = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
 
@@ -99,6 +104,15 @@ public class KnightAI : MonoBehaviour
     if (playerManager != null) {
         playerManager.KnightDied();
     }
+
+    if (chaseScript!=null)
+        {
+            chaseScript.KnightDied();
+        }
+    if (escapeScript!=null)
+        {
+            escapeScript.KnightDied();
+        }
 
     // 4. PHYSICS & NAVIGATION
     agent.isStopped = true;
