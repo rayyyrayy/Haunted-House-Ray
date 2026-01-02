@@ -10,8 +10,8 @@ public class PlayerManager : MonoBehaviour
     public UnityEvent startGame;
     public UnityEvent endGame;
     public UnityEvent returnBackground;
-    private int playerHealth=5;
-    private int  startingHealth=5;
+    private int playerHealth=6;
+    private int  startingHealth=6;
     private int deaths;
     private int totalKnightsDefeated = 0;
     private int totalGhostsEncountered = 0;
@@ -22,6 +22,7 @@ public class PlayerManager : MonoBehaviour
     public TextMeshProUGUI knightDefeatedText;
     public TextMeshProUGUI ghostEcounteredText;
     public TextMeshProUGUI deathsText;
+    [SerializeField] private OnButtonPress triggerbuttonPress;
 
 
     private bool isInvincible = false; // Prevents multi-hits in one swing
@@ -33,6 +34,7 @@ public class PlayerManager : MonoBehaviour
         livesText.SetText("Lives: " + playerHealth);
         deathCanvas.gameObject.SetActive(false);
         livesCanvas.gameObject.SetActive(false);
+        triggerbuttonPress.enabled=false;
     }
 
     void OnTriggerEnter(Collider other)
@@ -64,6 +66,7 @@ public class PlayerManager : MonoBehaviour
         {
 
             deathCanvas.gameObject.SetActive(true);
+            triggerbuttonPress.enabled=true;
             Time.timeScale = 0f; // Freezes AI and animations
         }
         else
@@ -87,7 +90,7 @@ public class PlayerManager : MonoBehaviour
 
     public void easyDiffuculty()
     {
-        playerHealth=7;
+        playerHealth=10;
         startingHealth=playerHealth;
         livesText.SetText("Lives: " + playerHealth);
 
@@ -95,7 +98,7 @@ public class PlayerManager : MonoBehaviour
 
     public void mediumDiffuculty()
     {
-        playerHealth=5;
+        playerHealth=6;
         startingHealth=playerHealth;
         livesText.SetText("Lives: " + playerHealth);
     }
@@ -103,6 +106,13 @@ public class PlayerManager : MonoBehaviour
     public void hardDiffuculty()
     {
         playerHealth=3;
+        startingHealth=playerHealth;
+        livesText.SetText("Lives: " + playerHealth);
+    }
+
+    public void extremeDiffuculty()
+    {
+        playerHealth=1;
         startingHealth=playerHealth;
         livesText.SetText("Lives: " + playerHealth);
     }
@@ -117,5 +127,15 @@ public class PlayerManager : MonoBehaviour
         totalGhostsEncountered++;
         ghostEcounteredText.SetText("Ghost Encountered: "+ totalGhostsEncountered);
 
+    }
+    public void triggerEnabled()
+    {
+        triggerbuttonPress.enabled=true;
+
+    }
+
+    public void triggerDisabled()
+    {
+        triggerbuttonPress.enabled=false;
     }
 }

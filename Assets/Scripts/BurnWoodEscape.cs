@@ -8,6 +8,9 @@ public class BurnWoodEscape : MonoBehaviour
 {
     public UnityEvent ghostChaos;
     public ParticleSystem burningAnimation;
+    public GameObject torch1;
+    public GameObject torch2;
+    public GameObject torch3;
 
     void Start()
     {
@@ -32,5 +35,12 @@ public class BurnWoodEscape : MonoBehaviour
         ghostChaos.Invoke();
         yield return new WaitForSeconds(1);
         Destroy(gameObject);
+    }
+
+    public void tagTorches()
+    {
+        torch1.tag="Torch";
+        torch2.tag="Torch";
+        torch3.tag="Torch";
     }
 }
