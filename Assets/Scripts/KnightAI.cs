@@ -6,7 +6,7 @@ public class KnightAI : MonoBehaviour
 {
     private Transform player; // Changed to private since we find it automatically
     public float attackRange = 2; 
-    public float attackRate = .8f; 
+    private float attackRate = .8f; 
     private float nextAttackTime = 0f;
     
     public int health = 3;

@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DoorAnim : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class DoorAnim : MonoBehaviour
     public GameObject _lock;
     public GameObject _startGameLock;
     public AudioSource doorSound;
+    public UnityEvent doorOpened;
 
 
     void Awake()
@@ -30,6 +32,7 @@ public class DoorAnim : MonoBehaviour
                 doorAnim.Play("Door_Open");
                 doorSound.Play();
                 isClosed = false;
+                doorOpened.Invoke();
             }
             else if (!isClosed)
             {
@@ -59,6 +62,7 @@ public class DoorAnim : MonoBehaviour
         {
             doorAnim.Play("Door_Open");
             doorSound.Play();
+            doorOpened.Invoke();
         }
         isClosed=false;
     }
