@@ -118,6 +118,13 @@ public class PlayerManager : MonoBehaviour
         startingHealth=playerHealth;
         livesText.SetText("Lives: " + playerHealth);
     }
+
+    public void noDeathDiffuculty()
+    {
+        playerHealth=100;
+        startingHealth=playerHealth;
+        livesText.SetText("Lives: " + playerHealth);
+    }
     public void KnightDied()
     {
         totalKnightsDefeated++; // Add this! Every time any knight dies, this goes up.
