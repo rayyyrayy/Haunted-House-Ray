@@ -12,7 +12,7 @@ public class PlayerManager : MonoBehaviour
     public UnityEvent returnBackground;
     private int playerHealth=6;
     private int  startingHealth=6;
-    private int deaths;
+    private int deaths=0;
     private int totalKnightsDefeated = 0;
     private int totalGhostsEncountered = 0;
 
