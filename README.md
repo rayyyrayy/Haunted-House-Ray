@@ -5,7 +5,6 @@ Explore the shadows, survive the knights, and escape with the treasure.
 Players Overview
 
 Step into a high-stakes VR adventure where atmosphere is everything. Trapped within the walls of a haunted house, you must navigate torch-lit rooms to find a hidden treasure. But you aren't alone. Restless knights patrol the halls and ghosts lurk in the dark. Manage your health and find the secret exit before the house claims you forever. Do you have the courage to claim the treasure and make it out alive?
-Proffesional Overview
 
 Proffesional Overview
 
