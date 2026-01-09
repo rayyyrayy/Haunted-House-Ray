@@ -8,7 +8,7 @@ Step into a high-stakes VR adventure where atmosphere is everything. Trapped wit
 
 Proffesional Overview
 
-The Iron Haunt is Built in Unity 2025 using the XR Interaction Toolkit, this project demonstrates advanced VR implementation including environmental triggers, UI elements, and custom AI behaviors for an immersive horror experience.
+The Iron Haunt (2026) is a high-stakes VR horror-escape game built in Unity. Navigate a haunted manor using advanced XR interactions, fending off AI-driven knights with your scythe while solving environmental puzzles to find the hidden treasure. Featuring multiple difficulty modes and a "No Death" exploration setting, it offers a tailored immersive experience for every type of player.
 
 How to Play
 The primary platform for this game is SideQuest.
