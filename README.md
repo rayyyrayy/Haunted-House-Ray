@@ -4,11 +4,11 @@ Explore the shadows, survive the knights, and escape with the treasure.
 
 Players Overview
 
-Step into a high-stakes VR adventure where atmosphere is everything. Trapped within the walls of a haunted house, you must navigate torch-lit rooms to find a hidden treasure. But you aren't alone. Restless knights patrol the halls and ghosts lurk in the dark. Manage your health and find the secret exit before the house claims you forever. Do you have the courage to claim the treasure and make it out alive?
+Step into a high-stakes VR adventure where atmosphere is everything. Trapped within the walls of a haunted manor, you must navigate torch-lit rooms to find a hidden treasure. But you aren't alone. Restless knights patrol the halls and ghosts lurk in the dark. Manage your health and find the secret exit before the manor claims you forever. Do you have the courage to claim the treasure and make it out alive?
 
 Proffesional Overview
 
-The Iron Haunt is Built in Unity 2025 using the XR Interaction Toolkit, this project demonstrates advanced VR implementation including environmental triggers, Ui elements, and custom AI behaviors for an immersive horror experience.
+The Iron Haunt is Built in Unity 2025 using the XR Interaction Toolkit, this project demonstrates advanced VR implementation including environmental triggers, UI elements, and custom AI behaviors for an immersive horror experience.
 
 How to Play
 The primary platform for this game is SideQuest.
@@ -19,9 +19,9 @@ Itch.io: A standalone APK is also available on our Itch.io page for manual sidel
 
 Controls
 
-Thumbstick: Continuous Movement (Warning: May cause motion sickness).
+Thumbstick: Continuous Movement (Warning: May cause motion sickness), Snap Turning.
 
-Grip Button: Pick up items (Torch, Scythe, Treasure).
+Grip Button: Pick up items (Torch, Scythe, Treasure, etc.).
 
 Trigger: Interact with UI elements.
 
